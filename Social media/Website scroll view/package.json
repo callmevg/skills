@@ -1,0 +1,16 @@
+{
+  "name": "website-scroll-view",
+  "private": true,
+  "type": "module",
+  "description": "Turn any website URL into an 'expo mode' 3D runway scroll video (Shopify Editions style).",
+  "scripts": {
+    "make": "node scripts/make.mjs",
+    "capture": "node scripts/capture.mjs",
+    "render": "node scripts/render.mjs",
+    "preview": "node scripts/render.mjs --serve"
+  },
+  "dependencies": {
+    "playwright": "^1.64.1",
+    "three": "^0.186.1"
+  }
+}

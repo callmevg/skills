@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Website scroll view</title>
+<style>
+  :root { --s: 1; --mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace; --sans: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { position: relative; overflow: hidden; background: #000; }
+  canvas { display: block; position: absolute; inset: 0; }
+  #ui, #svg { position: absolute; inset: 0; pointer-events: none; }
+  #svg path, #svg line { fill: none; stroke: rgba(255,255,255,.75); stroke-width: calc(1px * var(--s)); }
+  .mono { font-family: var(--mono); }
+  .nav { position: absolute; left: calc(14px * var(--s)); top: 36%; font: 500 calc(11.5px * var(--s))/1.55 var(--mono); color: #6f6f6f; letter-spacing: .01em; }
+  .nav div { position: relative; width: calc(118px * var(--s)); white-space: nowrap; overflow: hidden; text-overflow: clip; }
+  .nav div::after { content: ''; position: absolute; right: 0; top: 50%; width: calc(4px * var(--s)); height: calc(4px * var(--s)); margin-top: calc(-2px * var(--s)); border: calc(1px * var(--s)) solid #6f6f6f; border-radius: 50%; }
+  .nav div.on { color: #fff; }
+  .nav div.on::after { background: #fff; border-color: #fff; }
+  .co { position: absolute; color: #fff; font: 600 calc(19px * var(--s))/1.15 var(--sans); letter-spacing: -.01em; max-width: calc(260px * var(--s)); text-shadow: 0 1px 6px rgba(0,0,0,.45); will-change: transform, opacity; }
+  .co.r { text-align: left; } .co.l { text-align: right; }
+  .tag { position: absolute; font: calc(10.5px * var(--s)) var(--mono); color: #8d8d8d; white-space: nowrap; transform: translate(-50%, -50%); }
+  .chip { position: absolute; font: 500 calc(11.5px * var(--s)) var(--mono); color: #fff; padding: calc(1px * var(--s)) calc(5px * var(--s)); white-space: nowrap; transform: translate(-50%, -50%); outline: calc(1px * var(--s)) solid rgba(255,255,255,.55); }
+  .ghost { position: absolute; font: 500 calc(13px * var(--s)) var(--sans); color: rgba(255,255,255,.5); white-space: nowrap; transform: translate(-50%, -50%); }
+  .back { position: absolute; left: calc(14px * var(--s)); bottom: calc(14px * var(--s)); display: flex; gap: calc(9px * var(--s)); align-items: center; color: #c9c9c9; font: 500 calc(13px * var(--s)) var(--sans); }
+  .back svg { width: calc(17px * var(--s)); height: calc(17px * var(--s)); }
+  .dim { position: absolute; inset: 0; background: #000; opacity: 0; }
+  .hud { position: absolute; left: 0; right: 0; top: 64%; display: flex; flex-direction: column; align-items: center; gap: calc(26px * var(--s)); opacity: 0; font-family: var(--mono); color: #cfcfcf; }
+  .hud .start { background: #fff; color: #000; font: 500 calc(12px * var(--s)) var(--mono); padding: calc(7px * var(--s)) calc(22px * var(--s)); border-radius: calc(2px * var(--s)); }
+  .hud .bar { display: flex; border: calc(1px * var(--s)) solid #555; }
+  .hud .bar div { padding: calc(5px * var(--s)) calc(12px * var(--s)); border-left: calc(1px * var(--s)) solid #555; font-size: calc(10.5px * var(--s)); white-space: nowrap; }
+  .hud .bar div:first-child { border-left: 0; }
+  .hud .bar b { display: block; font-weight: 400; color: #7a7a7a; font-size: calc(9.5px * var(--s)); margin-bottom: calc(3px * var(--s)); }
+  .hud .w { width: 74%; position: relative; border-top: calc(1px * var(--s)) solid #8a8a8a; font-size: calc(10.5px * var(--s)); color: #8a8a8a; text-align: center; padding-top: calc(12px * var(--s)); }
+  .hud .w::before, .hud .w::after { content: ''; position: absolute; top: calc(-5px * var(--s)); height: calc(9px * var(--s)); border-left: calc(1px * var(--s)) solid #8a8a8a; }
+  .hud .w::before { left: 0; } .hud .w::after { right: 0; }
+  #err { position: absolute; left: 10px; top: 10px; color: #f55; font: 12px var(--mono); white-space: pre-wrap; }
+</style>
+<script type="importmap">{ "imports": { "three": "/three/build/three.module.js", "three/addons/": "/three/examples/jsm/" } }</script>
+</head>
+<body>
+<div id="stage">
+  <div id="ui"></div>
+  <svg id="svg" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+<script>window.addEventListener('error', (e) => { const d = document.createElement('div'); d.id = 'err'; d.textContent = String(e.message || e); document.body.appendChild(d); window.__sceneError = String(e.message || e); });</script>
+<script type="module" src="./scene.js"></script>
+</body>
+</html>
